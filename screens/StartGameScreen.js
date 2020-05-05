@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   Button,
   TouchableWithoutFeedback,
@@ -12,6 +11,9 @@ import {
 import Card from './../components/Card';
 import Input from './../components/Input';
 import NumberContainer from './../components/NumberContainer';
+import BodyText from './../components/BodyText';
+import TitleText from './../components/TitleText';
+import MainButton from './../components/MainButton';
 import colors from './../constants/colors';
 
 const StartGameScreen = ({ onStartGame }) => {
@@ -54,7 +56,7 @@ const StartGameScreen = ({ onStartGame }) => {
   if (!selectedNumber) {
     selectedNumberOutput = (
       <Card style={styles.inputContainer}>
-        <Text>Select a Number</Text>
+        <BodyText>Select a Number</BodyText>
         <Input
           style={styles.input}
           blurOnSubmit
@@ -82,14 +84,16 @@ const StartGameScreen = ({ onStartGame }) => {
     confirmedOutput = (
       <Card>
         <View style={styles.confirmedContainer}>
-          <Text style={styles.title}>You selected</Text>
+          <TitleText style={styles.title}>You selected</TitleText>
           <NumberContainer>{selectedNumber}</NumberContainer>
         </View>
         <View style={styles.confirmedOutputButton}>
           <Button title="Change Number" color={colors.secondary} onPress={changeInputHandler} />
         </View>
         <View style={styles.confirmedOutputButton}>
-          <Button title="Lets Play!" color={colors.primary} onPress={startGameHandler} />
+          <MainButton color={colors.primary} onPress={startGameHandler}>
+            Lets Play!
+          </MainButton>
         </View>
       </Card>
     );
@@ -98,7 +102,7 @@ const StartGameScreen = ({ onStartGame }) => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.screen}>
-        <Text style={styles.title}>Start a New Game!</Text>
+        <TitleText style={styles.title}>Start a New Game!</TitleText>
         {selectedNumberOutput}
         {confirmedOutput}
       </View>
@@ -114,12 +118,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    marginVertical: 10
-  },
-  titleNumber: {
-    fontSize: 25,
-    marginBottom: 20,
-    textAlign: 'center'
+    marginVertical: 10,
   },
   inputContainer: {
     width: 300,
