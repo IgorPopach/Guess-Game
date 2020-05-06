@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, StyleSheet, Button, Image, Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, Image, Text, Dimensions, ScrollView } from 'react-native';
 
 import BodyText from './../components/BodyText';
 import TitleText from './../components/TitleText';
@@ -9,30 +9,52 @@ import colors from './../constants/colors';
 
 const GameOverScreen = ({ userNumber, guessRounds, onRestart }) => {
 
+  const [availableDeviceWidth, setAvailableDeviceWidth] = useState(Dimensions.get('window').width);
+  const [availableDeviceHeight, setAvailableDeviceHeight] = useState(Dimensions.get('window').height);
+
+  useEffect(() => {
+    const updateLayout = () => {
+      setAvailableDeviceHeight(Dimensions.get('window').height);
+      setAvailableDeviceWidth(Dimensions.get('window').width);
+    };
+
+    Dimensions.addEventListener('change', updateLayout);
+    return () => {
+      Dimensions.removeEventListener('change', updateLayout);
+    }
+  });
+
   return (
-    <View style={styles.screen}>
-      <TitleText>The Game is Over</TitleText>
-      <View style={styles.imageContainer}>
-        <Image
-          fadeDuration={300}
-          source={require('../assets/success.png')}
-          // source={{
-          //   uri: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Summit_of_the_Matterhorn.jpg'
-          // }}
-          style={styles.image}
-          resizeMode="cover"
-        />
-      </View>
-      <View style={styles.resultContainer}>
-        <BodyText style={styles.resultText}>
-          Your phone needed <Text style={styles.highlight}>{guessRounds} </Text>
+    <ScrollView>
+      <View style={styles.screen}>
+        <TitleText>The Game is Over</TitleText>
+        <View style={{...styles.imageContainer, ...{
+          width: availableDeviceWidth * 0.7,
+          height: availableDeviceWidth * 0.7,
+          borderRadius: availableDeviceWidth * 0.7 / 2,
+          marginVertical: availableDeviceHeight / 30
+        }}}>
+          <Image
+            fadeDuration={300}
+            source={require('../assets/success.png')}
+            // source={{
+            //   uri: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Summit_of_the_Matterhorn.jpg'
+            // }}
+            style={styles.image}
+            resizeMode="cover"
+          />
+        </View>
+        <View style={{...styles.resultContainer, marginVertical: availableDeviceHeight / 60}}>
+          <BodyText style={{...styles.resultText, fontSize: availableDeviceHeight < 400 ? 16 : 20}}>
+            Your phone needed <Text style={styles.highlight}>{guessRounds} </Text>
         rounds to guess the number <Text style={styles.highlight}>{userNumber}</Text>.
       </BodyText>
-      </View>
-      <MainButton onPress={onRestart}>
-        New Game
+        </View>
+        <MainButton onPress={onRestart}>
+          New Game
       </MainButton>
-    </View>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -40,28 +62,23 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingBottom: 10
   },
   imageContainer: {
-    width: 300,
-    height: 300,
-    borderRadius: 150,
     borderWidth: 3,
     borderColor: 'black',
     overflow: 'hidden',
-    marginVertical: 30
   },
   image: {
     width: '100%',
     height: '100%',
   },
   resultContainer: {
-    marginHorizontal: 30,
-    marginVertical: 15
+    marginHorizontal: 30
   },
   resultText: {
-    textAlign: 'center',
-    fontSize: 20
+    textAlign: 'center'
   },
   highlight: {
     color: colors.primary,
