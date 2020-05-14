@@ -25,36 +25,38 @@ const GameOverScreen = ({ userNumber, guessRounds, onRestart }) => {
   });
 
   return (
-    <ScrollView>
-      <View style={styles.screen}>
-        <TitleText>The Game is Over</TitleText>
-        <View style={{...styles.imageContainer, ...{
-          width: availableDeviceWidth * 0.7,
-          height: availableDeviceWidth * 0.7,
-          borderRadius: availableDeviceWidth * 0.7 / 2,
-          marginVertical: availableDeviceHeight / 30
-        }}}>
-          <Image
-            fadeDuration={300}
-            source={require('../assets/success.png')}
-            // source={{
-            //   uri: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Summit_of_the_Matterhorn.jpg'
-            // }}
-            style={styles.image}
-            resizeMode="cover"
-          />
-        </View>
-        <View style={{...styles.resultContainer, marginVertical: availableDeviceHeight / 60}}>
-          <BodyText style={{...styles.resultText, fontSize: availableDeviceHeight < 400 ? 16 : 20}}>
-            Your phone needed <Text style={styles.highlight}>{guessRounds} </Text>
+      <ScrollView>
+        <View style={styles.screen}>
+          <TitleText>The Game is Over</TitleText>
+          <View style={{
+            ...styles.imageContainer, ...{
+              width: availableDeviceWidth * 0.7,
+              height: availableDeviceWidth * 0.7,
+              borderRadius: availableDeviceWidth * 0.7 / 2,
+              marginVertical: availableDeviceHeight / 30
+            }
+          }}>
+            <Image
+              fadeDuration={300}
+              source={require('../assets/success.png')}
+              // source={{
+              //   uri: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Summit_of_the_Matterhorn.jpg'
+              // }}
+              style={styles.image}
+              resizeMode="cover"
+            />
+          </View>
+          <View style={{ ...styles.resultContainer, marginVertical: availableDeviceHeight / 60 }}>
+            <BodyText style={{ ...styles.resultText, fontSize: availableDeviceHeight < 400 ? 16 : 20 }}>
+              Your phone needed <Text style={styles.highlight}>{guessRounds} </Text>
         rounds to guess the number <Text style={styles.highlight}>{userNumber}</Text>.
       </BodyText>
-        </View>
-        <MainButton onPress={onRestart}>
-          New Game
+          </View>
+          <MainButton onPress={onRestart}>
+            New Game
       </MainButton>
-      </View>
-    </ScrollView>
+        </View>
+      </ScrollView>
   );
 };
 
@@ -63,7 +65,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 10
+    paddingVertical: 10
   },
   imageContainer: {
     borderWidth: 3,
